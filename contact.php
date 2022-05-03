@@ -2,32 +2,77 @@
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
+use PHPMailer\PHPMailer\SMTP;
 
-require 'path/to/PHPMailer/src/Exception.php';
-require 'path/to/PHPMailer/src/PHPMailer.php';
-require 'path/to/PHPMailer/src/SMTP.php';
-
+require_once './includes/Exception.php';
+require_once './includes/PHPMailer.php';
+require_once './includes/SMTP.php';
 
 if (!empty($_POST['email']) && !empty($_POST['nom'])) {
-  $email = htmlspecialchars($_POST['email']);
-  $nom   = htmlspecialchars($_POST['nom']);
-  $prenom = htmlspecialchars($_POST['prenom']);
-  $message = htmlspecialchars($_POST['message']); // . ' ' . $email . ' ' . $nom . ' ' . $prenom;
-  $message = wordwrap($message, 70, '\r\n'); // Pour couper le message en ligne de 70 caractères pour éviter les problème sur certain navigateur
-  $to = htmlspecialchars('ktareb80@gmail.com');
-  $subject = htmlspecialchars('Demande de contact');
-  //$headers = [
-  // "From" => $email,
-  //  "Content-Type" => "text/html; charset=utf8" // Pour mettre du html dans le message
-  // "Nom"  => $nom,
-  // "Prénom" => $prenom
-  // ];
 
-  if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
-    mail($to, $subject, $message);
-  } else header('location:contact.php');
-  exit();
+
+
+  // ENVOIE MAIL AVEC PHPMAILER
+  $mail = new PHPMailer(true); // true pour gérer le Exeception
+
+  try {
+    // Configuration
+    $mail->SMTPDebug = SMTP::DEBUG_SERVER; //Pour avoir des informations de debug
+
+    //On configure le SMTP
+    $mail->isSMTP();
+    $mail->Host = "smtp.gmail.com";
+    $mail->Port = 587;
+
+    //Charset
+    $mail->CharSet = "utf-8";
+
+    //Destinataire
+    $mail->addAddress("rimkus12@outlook.com");
+
+    // $mail->addBCC("rimkus12@outlook.com"); // Copie cachée
+
+    //Expediteur
+    $expediteur = $_POST['email'];
+    $mail->Username = 'ktareb80@gmail.com';
+    $mail->Password = 'JesuisRimkus12!';
+    $mail->setFrom($expediteur);
+
+    // Contenu
+    $mail->Subject = "Mail client.";
+    $message = $_POST['message'];
+    $mail->Body = $message;
+
+    // On envoi
+    $mail->send();
+    echo "Message envoyé !";
+  } catch (Exception) {
+    echo "Message non envoyé. Erreur: {$mail->ErrorInfo}";
+  }
 }
+
+
+// ENVOIE MAIL SANS PHPMAILER
+// if (!empty($_POST['email']) && !empty($_POST['nom'])) {
+//   $email = htmlspecialchars($_POST['email']);
+//   $nom   = htmlspecialchars($_POST['nom']);
+//   $prenom = htmlspecialchars($_POST['prenom']);
+//   $message = htmlspecialchars($_POST['message']); // . ' ' . $email . ' ' . $nom . ' ' . $prenom;
+//   $message = wordwrap($message, 70, '\r\n'); // Pour couper le message en ligne de 70 caractères pour éviter les problème sur certain navigateur
+//   $to = htmlspecialchars('ktareb80@gmail.com');
+//   $subject = htmlspecialchars('Demande de contact');
+//$headers = [
+// "From" => $email,
+//  "Content-Type" => "text/html; charset=utf8" // Pour mettre du html dans le message
+// "Nom"  => $nom,
+// "Prénom" => $prenom
+// ];
+
+//   if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
+//     mail($to, $subject, $message);
+//   } else header('location:contact.php');
+//   exit();
+// }
 
 ?>
 
@@ -152,8 +197,8 @@ if (!empty($_POST['email']) && !empty($_POST['nom'])) {
 
             <!-- Text area -->
             <div class="mb-3">
-              <label for="messageForm" class="form-label text-white">Vous pouvez ajouter une message(5 lignes max).</label>
-              <textarea class="form-control" name="message" rows="5"></textarea>
+              <label for="message" class="form-label text-white">Vous pouvez ajouter une message(5 lignes max).</label>
+              <textarea class="form-control" name="message" rows="3"></textarea>
             </div>
 
             <button type="submit" class="btn btn-secondary">Soumettre</button>

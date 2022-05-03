@@ -1,0 +1,52 @@
+h1 {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+#messageContact {
+    border: 1px solid wheat;
+    border-radius: 30px;
+}
+
+#tel {
+    text-decoration: none;
+    font-size: 45px;
+    color: firebrick;
+
+}
+
+#tel:hover {
+    font-weight: bold;
+}
+
+#textWhite {
+    color: white;
+}
+
+.dwd
+{
+    font-weight: bolder;
+    font-size: 5rem;
+   font-family: "Binjay";
+   color: antiquewhite;
+}
+
+.fondDePage {
+    background: linear-gradient(white, black);
+}
+
+.fondNoir {
+    background: black;
+    border-top: .1px solid white;
+}
+
+@media screen and (max-width: 767px) {
+    #reseauSociau {
+        margin-left: 80px;
+    }
+}
+
+@font-face
+{
+    font-family: "Binjay";
+    src: url(../src/Binjay.otf) format('opentype');
+}

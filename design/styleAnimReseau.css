@@ -1,0 +1,90 @@
+* {
+    margin: 0; padding: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+}
+
+
+
+
+.box {
+    display: flex;
+
+}
+
+#checkbox {
+    height: 60px;
+    width: 60px;
+    appearance: none;
+    background: white;
+    cursor: pointer;
+    position: relative;
+    /* -moz-appearance: none;
+    -webkit-appearance: none; */
+    /* outline: none; */ /*suppression du contour(problème accessibilté)*/
+
+}
+
+#checkbox:hover, .menu .menuItems:hover {
+    background: rgba(255,255,255,.7);
+}
+
+#checkbox::before {
+content: '\f1e0'; /* code recupere par font awesome*/
+font-family: 'font awesome 5 free';
+font-weight: 700;
+font-size: 1.5rem;
+position: absolute;
+top: 50%;
+left: 50%;
+transform: translate(-50%, -50%);
+color: rgb(41, 41, 41);
+transition: all 1.5s;
+}
+
+#checkbox:checked::before {
+content: '\f00d';
+}
+
+#checkbox:checked ~ .menu {
+width: 60px; /* calculé en additionnat les 4 icon de 65px + les 4 bordures de 1px = 4*65 + 4*1 = 264*/
+}
+
+.menu {
+    width: 0;
+    overflow: hidden;
+    display: flex; /* mettre icons les uns à côté des autres*/
+    transition: all .5s;
+}
+
+.menu .menuItems {
+    width: 60px;
+    height: 60px;
+    background: white;
+    border-left: 1px solid rgb(165, 165, 165);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.menu .menuItems i {
+    font-size: 1.8rem;
+}
+
+.fa-whatsapp {
+    color: #25d366;
+}
+
+.fa-instagram {
+    columns: #c32aa3;
+}
+
+.fa-facebook {
+    color: #273c75;
+}
+
+.fa-twitter {
+    color: #1da1f2;
+}
+
+/* merci à believemy */

@@ -1,78 +1,110 @@
 <?php
-
+//Import PHPMailer classes into the global namespace
+//These must be at the top of your script, not inside a function
 use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\Exception;
 use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
 
-require_once './includes/Exception.php';
-require_once './includes/PHPMailer.php';
-require_once './includes/SMTP.php';
+// AVEC PHPMAILER
+require_once('./includes/Exception.php');
+require_once('./includes/PHPMailer.php');
+require_once('./includes/SMTP.php');
 
+//Create an instance; passing `true` enables exceptions
+$mail = new PHPMailer(true);
 if (!empty($_POST['email']) && !empty($_POST['nom'])) {
-
-
-
-  // ENVOIE MAIL AVEC PHPMAILER
-  $mail = new PHPMailer(true); // true pour gérer le Exeception
-
   try {
-    // Configuration
-    $mail->SMTPDebug = SMTP::DEBUG_SERVER; //Pour avoir des informations de debug
+    ob_start();
+    //DECLARATION DES VARIABLES
+    $email = htmlspecialchars($_POST['email']);
+    $nom   = htmlspecialchars($_POST['nom']);
+    $prenom = htmlspecialchars($_POST['prenom']);
+    $message = htmlspecialchars($_POST['message']); // . ' ' . $email . ' ' . $nom . ' ' . $prenom;
+    $message = wordwrap($message, 70, '\r\n'); // Pour couper le message en ligne de 70 caractères pour éviter les problème sur certain navigateur
 
-    //On configure le SMTP
-    $mail->isSMTP();
-    $mail->Host = "smtp.gmail.com";
-    $mail->Port = 587;
+    $ficheClient = "
+        <h2>Fiche client</h2>
+    <table>
+      <tr>
+        <th>Nom:</th>
+        <td>" . $nom . "</td>
+      </tr>
+      <tr>
+        <th>Prénom:</th>
+        <td>" . $prenom . "</td>
+      </tr>
+      <tr>
+        <th>Email:</th>
+        <td>" . $email . "</td>
+      </tr>
+      <tr>
+        <th>Téléphone: </th>
+        <td>" . $telephone . "</td>
+      </tr>
+      <tr>
+        <th>Message: </th>
+        <td>" . $message . "</td>
+      </tr>
+    </table>
+        ";
 
-    //Charset
-    $mail->CharSet = "utf-8";
 
-    //Destinataire
-    $mail->addAddress("rimkus12@outlook.com");
+    //Server settings
+    $mail->SMTPDebug  = SMTP::DEBUG_SERVER;            //Enable verbose debug output
+    $mail->isSMTP();                                   //Send using SMTP
+    $mail->Host       = 'smtp.gmail.com';              //Set the SMTP server to send through
+    $mail->SMTPAuth   = true;                          //Enable SMTP authentication
+    $mail->Username   = 'ktareb80@gmail.com';          //SMTP username
+    $mail->Password   = 'JesuisRimkus12!';             //SMTP password
+    $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;   //Enable implicit TLS encryption
+    // $mail->SMTPDebug = 1;
 
-    // $mail->addBCC("rimkus12@outlook.com"); // Copie cachée
+    $mail->Port       = 465;                           //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
+    $mail->SMTPOptions = array(
+      'ssl' => array(
+        'verify_peer' => false,
+        'verify_peer_name' => false,
+        'allow_self_signed' => true
+      )
+    );
 
-    //Expediteur
-    $expediteur = $_POST['email'];
-    $mail->Username = 'ktareb80@gmail.com';
-    $mail->Password = 'JesuisRimkus12!';
-    $mail->setFrom($expediteur);
+    //Recipients
+    $mail->setFrom('tareb.karim@orange.fr', 'Expediteur');
+    $mail->addAddress('karim.tareb@orange.fr', 'Destinataire');     //Add a recipient
+    //$mail->addAddress('ellen@example.com');               //Name is optional
+    //$mail->addReplyTo('info@example.com', 'Information');
+    //$mail->addCC('cc@example.com');
+    //$mail->addBCC('bcc@example.com');
 
-    // Contenu
-    $mail->Subject = "Mail client.";
-    $message = $_POST['message'];
-    $mail->Body = $message;
+    //Attachments
+    //$mail->addAttachment('/var/tmp/file.tar.gz');         //Add attachments
+    //$mail->addAttachment('/tmp/image.jpg', 'new.jpg');    //Optional name
 
-    // On envoi
-    $mail->send();
-    echo "Message envoyé !";
+    //Content
+    $mail->isHTML(true);                                  //Set email format to HTML
+    $mail->Subject = 'Test envoi mail PHPMailer';
+    //$mail->Body    = $_POST['prenom'] . ' vous à contacté. Voici son adresse mail : <br>'
+    //     . $_POST['email'];
+    $mail->Body = $ficheClient;
+
+    $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
+
+    if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
+      try {
+        $mail->send();
+        header('location:./messageEnvoye.html');
+        exit();
+      } catch (Exception $e) {
+        echo $e->getMessage();
+        echo 'Mail pas envoyé';
+      }
+    } else header('location:contact.php');
+    exit();
+    ob_end_flush();
   } catch (Exception) {
-    echo "Message non envoyé. Erreur: {$mail->ErrorInfo}";
+    echo "Le message n'a pas pu être envoyé. Erreur : {$mail->ErrorInfo}";
   }
 }
-
-
-// ENVOIE MAIL SANS PHPMAILER
-// if (!empty($_POST['email']) && !empty($_POST['nom'])) {
-//   $email = htmlspecialchars($_POST['email']);
-//   $nom   = htmlspecialchars($_POST['nom']);
-//   $prenom = htmlspecialchars($_POST['prenom']);
-//   $message = htmlspecialchars($_POST['message']); // . ' ' . $email . ' ' . $nom . ' ' . $prenom;
-//   $message = wordwrap($message, 70, '\r\n'); // Pour couper le message en ligne de 70 caractères pour éviter les problème sur certain navigateur
-//   $to = htmlspecialchars('ktareb80@gmail.com');
-//   $subject = htmlspecialchars('Demande de contact');
-//$headers = [
-// "From" => $email,
-//  "Content-Type" => "text/html; charset=utf8" // Pour mettre du html dans le message
-// "Nom"  => $nom,
-// "Prénom" => $prenom
-// ];
-
-//   if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
-//     mail($to, $subject, $message);
-//   } else header('location:contact.php');
-//   exit();
-// }
 
 ?>
 
@@ -195,9 +227,15 @@ if (!empty($_POST['email']) && !empty($_POST['nom'])) {
               <input type="text" class="form-control" name="prenom" placeholder="Veuillez entrer votre prénom." />
             </div>
 
+            <!-- Téléphone -->
+            <div class="mb-3">
+              <label for="telephone" class="form-label text-white">Téléphone</label>
+              <input type="text" class="form-control" name="telephone" placeholder="Veuillez entrer votre téléphone." />
+            </div>
+
             <!-- Text area -->
             <div class="mb-3">
-              <label for="message" class="form-label text-white">Vous pouvez ajouter une message(5 lignes max).</label>
+              <label for="message" class="form-label text-white">Vous pouvez ajouter une message(3 lignes max).</label>
               <textarea class="form-control" name="message" rows="3"></textarea>
             </div>
 

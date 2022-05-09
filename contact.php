@@ -115,10 +115,11 @@ if (!empty($_POST['email']) && !empty($_POST['nom'])) {
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="./design/bootstrap.min.css" />
-  <link rel="stylesheet" href="./design/bootstrap.min.css.map" />
+  <link href="./img/favicon.ico" rel="shortcut icon" type="image/x-icon" />
   <link rel="stylesheet" href="./design/style.css" />
   <link rel="stylesheet" href="./design/styleAnimReseau.css" />
+  <link rel="stylesheet" href="./design/bootstrap.min.css" />
+  <link rel="stylesheet" href="./design/bootstrap.min.css.map" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
   <title>Contact</title>
 </head>
@@ -139,7 +140,9 @@ if (!empty($_POST['email']) && !empty($_POST['nom'])) {
   <nav class="navbar sticky-top bg-dark navbar-dark navbar-expand-md">
     <!-- Le breakpoint se précise dans ce cas-->
     <div class="container">
-      <div class="navbar-brand">Portail</div>
+      <div class="navbar-brand">
+        Portail
+      </div>
 
       <div class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#monMenuDeroulant">
         <span class="navbar-toggler-icon"></span>
@@ -160,6 +163,7 @@ if (!empty($_POST['email']) && !empty($_POST['nom'])) {
       </div>
     </div>
   </nav>
+
 
   <!-- INSCRIPTION     -->
   <section style="
@@ -249,10 +253,10 @@ if (!empty($_POST['email']) && !empty($_POST['nom'])) {
   </section>
 
   <!-- FOOTER -->
-  <footer class="fondNoir text-white p-3">
+  <footer class="bg-dark text-white p-3">
     <div class="row text-center">
       <!-- <div class="col-2"></div> -->
-      <div id="reseauSociau" class="col-md-4 mt-4">
+      <div class="col-md-4 mt-4">
         <!-- Liens Réseaux Sociaux Animés -->
         <div class="box">
           <!-- CHECKBOX -->
@@ -292,11 +296,40 @@ if (!empty($_POST['email']) && !empty($_POST['nom'])) {
         </div>
       </div>
       <div class="col-md-4 dwd">DWD</div>
-      <div class="col-md-2"></div>
       <!-- Nom  et Année -->
-      <div class="col-md-2 mt-5 fs-5">2022 © Karim Tareb</div>
+      <div class="col-md-4 mt-5 fs-5">
+
+        2022 © Karim Tareb
+
+      </div>
     </div>
   </footer>
+
+
+  <!-- BS avec JS -->
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+
+  <!-- Infobulle avec BS -->
+
+  <script>
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+    var tooltipList = tooltipTriggerList.map(function(tooltipTriggerEl) {
+      return new bootstrap.Tooltip(tooltipTriggerEl)
+    })
+
+    // Popover BS 
+
+
+    var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'));
+    var popoverList = popoverTriggerList.map(function(popoverTriggerEl) {
+      return new bootstrap.Popover(popoverTriggerEl)
+    })
+
+    var popover = new bootstrap.Popover(document.querySelector('.example-popover'), {
+      container: 'body'
+    })
+  </script>
 </body>
 
 </html>

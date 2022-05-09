@@ -157,6 +157,9 @@ if (!empty($_POST['email']) && !empty($_POST['nom'])) {
             <a href="./vitrine.html" class="nav-link">Vitrine</a>
           </li>
           <li class="nav-item">
+            <a href="./siteCompteClient/index.php" class="nav-link">Compte client</a>
+          </li>
+          <li class="nav-item">
             <a href="./contact.php" class="nav-link">Contact</a>
           </li>
         </ul>

@@ -46,7 +46,7 @@ if (isset($_SESSION['connect'])) {
 if (isset($_SESSION['connect'])) {
 
     $reqUser = $bdd->prepare('UPDATE user
-                              SET last_connection = CURRENT_TIMESTAMP
+                              SET last_connexion = CURRENT_TIMESTAMP
                               WHERE email = ?');
     $reqUser->execute(array($_SESSION['email']));
 }

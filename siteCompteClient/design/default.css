@@ -92,6 +92,12 @@ button {
 	cursor: pointer;
 }
 
+span {
+	font-family: "Binjay";
+	/* font-size: 1.3em; */
+    color: antiquewhite;
+}
+
 #option {
 	color: #b3b3b3;
 	margin-top: 10px;
@@ -138,10 +144,21 @@ button {
 }
 
 @media all and (max-width: 1030px) {
-	.container { width: 800px; }
+	.container { width: 800px;}
 }
 
-@media all and (max-width: 830px) {
+@media all and (max-width: 800px) {
 	.container { width: 580px; }
+
 	header { text-align: center; padding-left: 20px; }
+}
+@media all and (max-width: 600px) {
+	.container { width: 330px;}
+	.container { text-align: center; padding-left: 20px; }
+}
+
+@font-face
+{
+    font-family: "Binjay";
+    src: url(../src/Binjay.otf) format('opentype');
 }

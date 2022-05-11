@@ -124,7 +124,7 @@ if (!empty($_POST['email']) && !empty($_POST['password'])) {
 				</form>
 
 
-				<p class="grey">Première visite sur DWD ? <a href="inscription.php">Inscrivez-vous</a>.</p>
+				<p class="grey">Première visite sur <span>DWD</span> ? <a href="inscription.php">Inscrivez-vous</a>.</p>
 			<?php } ?>
 		</div>
 	</section>

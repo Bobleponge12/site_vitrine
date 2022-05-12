@@ -18,7 +18,8 @@ if (!empty($_POST['email']) && !empty($_POST['nom'])) {
     //DECLARATION DES VARIABLES
     $email = htmlspecialchars($_POST['email']);
     $nom   = htmlspecialchars($_POST['nom']);
-    $prenom = htmlspecialchars($_POST['prenom']);
+    $offreChoisie = htmlspecialchars($_POST['selecteurOffre']);
+    $telephone = htmlspecialchars($_POST['telephone']);
     $message = htmlspecialchars($_POST['message']); // . ' ' . $email . ' ' . $nom . ' ' . $prenom;
     $message = wordwrap($message, 70, '\r\n'); // Pour couper le message en ligne de 70 caractères pour éviter les problème sur certain navigateur
 
@@ -26,23 +27,23 @@ if (!empty($_POST['email']) && !empty($_POST['nom'])) {
         <h2>Fiche client</h2>
     <table>
       <tr>
-        <th>Nom:</th>
+        <th>Nom : </th>
         <td>" . $nom . "</td>
       </tr>
       <tr>
-        <th>Prénom:</th>
-        <td>" . $prenom . "</td>
+        <th>Offre choisie : </th>
+        <td>" . $offreChoisie . "</td>
       </tr>
       <tr>
-        <th>Email:</th>
+        <th>Email : </th>
         <td>" . $email . "</td>
       </tr>
       <tr>
-        <th>Téléphone: </th>
+        <th>Téléphone : </th>
         <td>" . $telephone . "</td>
       </tr>
       <tr>
-        <th>Message: </th>
+        <th>Message : </th>
         <td>" . $message . "</td>
       </tr>
     </table>
@@ -55,7 +56,7 @@ if (!empty($_POST['email']) && !empty($_POST['nom'])) {
     $mail->Host       = 'smtp.gmail.com';              //Set the SMTP server to send through
     $mail->SMTPAuth   = true;                          //Enable SMTP authentication
     $mail->Username   = 'ktareb80@gmail.com';          //SMTP username
-    $mail->Password   = 'JesuisRimkus12!';             //SMTP password
+    $mail->Password   = 'CestmoiRimkus05!';             //SMTP password
     $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;   //Enable implicit TLS encryption
     // $mail->SMTPDebug = 1;
 
@@ -228,17 +229,20 @@ if (!empty($_POST['email']) && !empty($_POST['nom'])) {
               <input type="text" class="form-control" name="nom" placeholder="Votre nom est indispensable." required />
             </div>
 
-            <!-- Prénom -->
-            <div class="mb-3">
-              <label for="prenom" class="form-label text-white">Prénom</label>
-              <input type="text" class="form-control" name="prenom" placeholder="Veuillez entrer votre prénom." />
-            </div>
-
             <!-- Téléphone -->
             <div class="mb-3">
               <label for="telephone" class="form-label text-white">Téléphone</label>
               <input type="text" class="form-control" name="telephone" placeholder="Veuillez entrer votre téléphone." />
             </div>
+
+            <!-- Choix Offre -->
+            <select class="form-select mt-5 mb-5" aria-label="Choix de l'offre" name="selecteurOffre">
+              <option selected>Selectionnez le site qui vous interresse :</option>
+              <option value="Site vitrine">Site vitrine</option>
+              <option value="Site avec compte client">Site avec Compte Client</option>
+              <option value="Site e-commerce">Site e-commerce</option>
+            </select>
+
 
             <!-- Text area -->
             <div class="mb-3">

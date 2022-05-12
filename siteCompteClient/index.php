@@ -120,7 +120,7 @@ if (!empty($_POST['email']) && !empty($_POST['password'])) {
 					<input type="email" name="email" placeholder="Votre adresse email" required />
 					<input type="password" name="password" placeholder="Mot de passe" required />
 					<button type="submit">S'identifier</button>
-					<label id="option"><input type="checkbox" name="auto" checked />Se souvenir de moi</label>
+					<label id="option"><input type="checkbox" name="auto" checked />Se souvenir de moi | <a href="../index.html"> Acceuil principal</a></label>
 				</form>
 
 
